@@ -1,0 +1,190 @@
+.home.section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.home__container {
+  row-gap: 7rem;
+  padding: 0 0rem;
+}
+
+.home__content {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  align-items: center;
+  column-gap: 2rem;
+  padding-top: 3rem;
+}
+
+.home__data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+.home__subtitle {
+  position: relative;
+  font-size: var(--h3-font-size);
+  font-weight: var(--font-normal);
+  margin-bottom: var(--mb-1);
+  /*padding-left: 5.4rem;*/
+}
+
+.home__social {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: var(--mb-2);
+}
+
+.home__social-icon {
+  font-size: 1.25rem;
+  color: var(--title-color);
+}
+
+.home__social-icon:hover {
+  color: var(--title-color-dark);
+}
+
+.home__title {
+  font-size: var(--big-font-size);
+  margin-bottom: var(--mb-0-25);
+  color: #000000;
+}
+
+.home__description {
+  max-width: 650px;
+  margin-top: 0rem;
+  line-height: 1.8;
+  font-size: 1rem;
+}
+
+.home__avatar-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* align-self: start; failed to align with textbox, (try margin top)*/
+  margin-top: -13rem; /* Adjust value to align avatar with description text block */
+}
+
+.home__avatar {
+  justify-self: center;
+  align-self: center;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: var(--container-color);
+  box-shadow: inset 0 0 0 9px rgb(225 225 225 / 30%);
+  /*position: relative;*/
+  /*order: 1; */
+}
+
+.home__scroll {
+  margin-left: 0rem;
+  padding-top: 10rem;
+}
+
+.wheel {
+  animation: scroll 2s ease infinite;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(3.75rem);
+  }
+}
+
+.home__scroll-name {
+  color: #383838;
+  font-weight: var(--font-medium);
+  margin-right: var(--mb-0-25);
+  margin-left: 2px;
+}
+
+.home__scroll-arrow {
+  font-size: 1.2rem;
+  color: var(--title-color);
+}
+
+/* BREAK POINTS */
+@media screen and (max-width: 992px) {
+  .home__content {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1.25rem;
+  }
+
+  .home__description {
+    max-width: initial;
+    margin-bottom: var(--mb-2-5);
+  }
+
+  .home__avatar {
+    width: 250px;
+    height: 250px;
+    box-shadow: inset 0 0 0 8px rgb(225 225 225 / 30%);
+  }
+
+  .home__scroll {
+    margin-left: 0;
+  }
+
+  .home__avatar-wrapper {
+    justify-content: center;
+    margin-top: 0;
+  }
+
+  .home__data {
+    align-items: center;
+  }
+
+  .home__social {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .home__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 0rem 2rem;
+    gap: 1rem;
+  }
+
+  .home__data {
+    align-items: center;
+    width: 100%;
+  }
+
+  .home__avatar-wrapper {
+    order: -1;
+    margin-top: 0;
+    margin-bottom: 0rem;
+    justify-content: center;
+  }
+
+  .home__avatar {
+    width: 200px;
+    height: 200px;
+    box-shadow: inset 0 0 0 6px rgb(225 225 225 / 30%);
+  }
+
+  .home__scroll {
+    display: none;
+  }
+
+  .home__social {
+    justify-content: center;
+    margin-top: 1rem;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .home__avatar {
+    width: 180px;
+    height: 180px;
+  }
+}
