@@ -38,12 +38,12 @@
 .avatar-message {
   position: absolute;
   bottom: -30px;
-  left: 35%;
+  left: 30%;
   transform: translateX(-50%);
-  color: #2c2c2c;
-  font-weight: 300;
+  color: #232323;
+  font-weight: 500;
   font-style: italic;
-  font-size: 1rem;
+  font-size: 1.05rem;
   animation: fadeInOut 4s ease-in-out forwards;
   white-space: nowrap;
   z-index: 10;

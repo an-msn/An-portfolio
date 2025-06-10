@@ -34,7 +34,7 @@ const Avatar = ({ className }) => {
           highSpeedStart.current = now;
         } else if (now - highSpeedStart.current > HIGH_SPEED_DURATION) {
           // Trigger dizzy state
-          setMessage("Nthuvadey!");
+          setMessage("Bro, Thala-valikkudh!");
 
           setEyePosition({ x: 0, y: 0 });
           setFaceTilt(0);
