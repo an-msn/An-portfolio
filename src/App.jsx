@@ -15,7 +15,7 @@ const App = () => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 1000); // 3 seconds total loading time
+    }, 3000); // 3 seconds total loading time
   }, []);
 
   return (
