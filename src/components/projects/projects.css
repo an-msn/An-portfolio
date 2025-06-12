@@ -64,8 +64,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: var(--z-modal);
+  background-color: rgba(0, 0, 0, 0.285);
+  z-index: 1000;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -76,7 +76,10 @@
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
-
+.projects__modal.active-modal {
+  opacity: 1;
+  visibility: visible;
+}
 .projects__modal-content {
   width: 90%;
   max-width: 550px;
