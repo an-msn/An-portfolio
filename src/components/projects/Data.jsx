@@ -71,11 +71,9 @@ export const projectsData = [
       "Enhanced by OpenAI GPT-4 Intelligence",
     ],
     description: [
-      "Your intelligent companion for personalized activity suggestions based on real-time weather conditions. " +
-        "The project aims to enhance your daily planning by providing context-aware recommendations, ensuring you make the most of your day, come rain or shine. " +
-        "At its core, Go Guide generates intelligent activity suggestions tailored to the current weather, helping you find the perfect thing to do. " +
-        "Whether it's a sunny day perfect for outdoor adventures or a rainy afternoon best spent indoors, our AI has you covered. " +
-        "Plus, with integrated Google Maps API, GoGuide provide location-based suggestions, helping you discover nearby venues and activities with ease. ",
+      "A context-aware recommendation system that suggests personalized activities based on real-time weather data. " +
+        "Leveraging weather APIs and the Google Maps API, it dynamically generates location-based suggestions, " +
+        "optimizing user plans for both indoor and outdoor conditions.",
     ],
   },
 ];

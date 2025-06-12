@@ -6,10 +6,10 @@ const Data = () => {
     <div className="home__data">
       <h1 className="home__title">
         <span style={{ fontWeight: 100 }}>Hi, my name is</span>{" "}
-        <span style={{ fontWeight: 400 }}>An</span>.
+        <span style={{ fontWeight: 500 }}>An</span>.
       </h1>
       <h3 className="home__subtitle">
-        <span style={{ fontWeight: 300 }}>
+        <span style={{ fontWeight: 400 }}>
           I'm an independent creative developer.
         </span>
       </h3>

@@ -24,6 +24,7 @@
 }
 .home__subtitle {
   position: relative;
+  color: #777777;
   font-size: var(--h3-font-size);
   font-weight: var(--font-normal);
   margin-bottom: var(--mb-1);
@@ -56,6 +57,7 @@
   margin-top: 0rem;
   line-height: 1.8;
   font-size: 1rem;
+  color: #000000;
 }
 
 .home__avatar-wrapper {
