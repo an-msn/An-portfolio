@@ -43,7 +43,7 @@ const About = () => {
           </p>
           <a
             download=""
-            href="https://drive.google.com/file/d/1FOQeyvkeAH4eEWFyy0XX2HsWdaZBz9v3/view?usp=drive_link"
+            href="https://drive.google.com/file/d/1gLOIqL72YkeQZzw8hZcoC8g7Wtogn_Q_/view?usp=drive_link"
             className="resume_button"
             target="_blank"
             rel="noopener noreferrer"
