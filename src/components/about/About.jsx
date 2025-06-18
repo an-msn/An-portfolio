@@ -33,13 +33,14 @@ const About = () => {
             celebrating clarity and peace over excess. <br />
             Beyond coding, you’ll often find me playing cricket or racquet
             sports or occasionally challenging someone to a game of chess (If
-            you're up for it, click the horse icon and send an invite. I’ll join
-            in, or we’ll set a time.)
+            you're up for it, tap the knight icon to send an invite, and let’s
+            schedule a match.)
           </p>
           <p className="about__description">
-            I’m also passionate about photography, especially vintage 35mm film.
-            I’ll be updating this space soon with a full About page and a
-            gallery of my favourite clicks. Until then, thanks for stopping by.
+            I am also a keen enthusiast of vintage 35mm film, where I aim to
+            capture candid frames and the happy accidents of light leaks on old
+            rolls. I'll be updating this space soon with a full About page and a
+            gallery of my favourite clicks. Until then, thanks for stopping by!
           </p>
           <a
             download=""
