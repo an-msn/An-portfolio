@@ -13,12 +13,14 @@ const About = () => {
         {/* <img src={AboutImg} alt="about" className="about__img" /> */}
         <div className="about__data">
           <p className="about__description">
-            Growing up on the lush western slopes of the Western Ghats, in
+            Growing up on the lush western slopes of the Western Ghats in
             Kerala’s culturally rich landscapes, I developed a deep appreciation
-            for tech, art and culture. Hello, I’m Ananthu. I'm a software
-            developer with expertise in JavaScript, ReactJS and Java Spring. I
-            build user-centric solutions that balance functionality, aesthetics,
-            and accessibility, all backed by solid research. <br />
+            for the intersection of tech, art, and human connection. Hello, I’m
+            Ananthu. I'm a software developer with expertise in JavaScript,
+            ReactJS, and Java Spring. I build user-centric solutions that
+            balance functionality, aesthetics, and accessibility, grounded in
+            thorough research and driven by a foundational appreciation for
+            holistic design. <br />
             My fascination with coding began in college, where I discovered the
             thrill of crafting innovative solutions. I challenge the status quo
             by envisioning smarter, more strategic possibilities. Through system
