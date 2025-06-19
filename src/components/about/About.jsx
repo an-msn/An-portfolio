@@ -42,7 +42,7 @@ const About = () => {
             I am also a keen enthusiast of vintage 35mm film, where I aim to
             capture candid frames and the happy accidents of light leaks on old
             rolls. I'll be updating this space soon with a full About page and a
-            gallery of my favourite clicks. Until then, thanks for stopping by!
+            gallery of my favourite clicks. Until then, thanks for stopping by.
           </p>
           <a
             download=""
