@@ -2,8 +2,25 @@
   width: 264px;
   height: 280px;
   margin: 2rem auto;
-  cursor: pointer;
   perspective: 800px;
+  position: relative;
+}
+.avatar-container::before {
+  content: "";
+  position: absolute;
+  /* Center the circle within the container */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* size of the circle (adjust) */
+  width: 210px;
+  height: 210px;
+  border-radius: 50%;
+  /* circle behind the avatar */
+  z-index: -1;
+
+  background: transparent;
+  box-shadow: 0 0 5px 1px rgba(174, 174, 174, 0.638);
 }
 
 .avatar {
@@ -36,10 +53,11 @@
   transform: translateY(-2px);
 }
 .avatar-message {
-  position: absolute;
+  position: fixed;
   bottom: -30px;
-  left: 30%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  text-align: center;
   color: #000000;
   font-weight: 650;
   font-style: italic;
@@ -51,7 +69,13 @@
   background: none;
   border-radius: 0;
   box-shadow: none;
+  overflow: visible;
+  pointer-events: none;
 }
+html[data-theme="dark"] .avatar-message {
+  color: #c2c2c2;
+}
+
 @keyframes fadeInOut {
   0% {
     opacity: 0;

@@ -1,26 +1,42 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import "./avatar.css";
 
-const Avatar = ({ className }) => {
+const DIZZY_MESSAGES = [
+  "Annai Thala-Valikkudh!",
+  "Whoa, slow down!",
+  "I'm getting dizzy!",
+  "Too fast, bro!",
+  "Need a break",
+  "Calibrating...",
+];
+
+const MAX_OFFSET = 0.71;
+const SPEED_THRESHOLD = 100;
+const HIGH_SPEED_DURATION = 1500;
+const COOLDOWN_DURATION = 4000;
+const MAX_TILT = 10;
+
+const Avatar = ({ intAv }) => {
+  // State
   const [eyePosition, setEyePosition] = useState({ x: 0, y: 0 });
   const [faceTilt, setFaceTilt] = useState(0);
   const [message, setMessage] = useState(null);
+  // Refs
   const containerRef = useRef(null);
-
   const lastPosition = useRef({ x: 0, y: 0, time: 0 });
   const highSpeedStart = useRef(null);
-  useEffect(() => {
-    const MAX_OFFSET = 0.61;
-    const SPEED_THRESHOLD = 100;
-    const HIGH_SPEED_DURATION = 1600;
-    const COOLDOWN_DURATION = 5000;
-
-    const handleMouseMove = (e) => {
-      if (!containerRef.current) return;
+  const cooldownRef = useRef(null);
+  const isDizzyRef = useRef(false);
+  const animationFrameRef = useRef(null);
+  const handleMouseMove = useCallback((e) => {
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+    }
+    animationFrameRef.current = requestAnimationFrame(() => {
+      if (!containerRef.current || isDizzyRef.current) return;
 
       const { clientX, clientY } = e;
       const now = Date.now();
-
       const deltaX = clientX - lastPosition.current.x;
       const deltaY = clientY - lastPosition.current.y;
       const distance = Math.sqrt(deltaX ** 2 + deltaY ** 2);
@@ -29,27 +45,32 @@ const Avatar = ({ className }) => {
 
       lastPosition.current = { x: clientX, y: clientY, time: now };
 
+      //(dizzy logic)
       if (speed > SPEED_THRESHOLD) {
         if (!highSpeedStart.current) {
           highSpeedStart.current = now;
         } else if (now - highSpeedStart.current > HIGH_SPEED_DURATION) {
           // Trigger dizzy state
-          setMessage("HI");
+          isDizzyRef.current = true;
+          const randomMsg =
+            DIZZY_MESSAGES[Math.floor(Math.random() * DIZZY_MESSAGES.length)];
+          setMessage(randomMsg);
 
           setEyePosition({ x: 0, y: 0 });
           setFaceTilt(0);
 
-          // cooldown
-          setTimeout(() => {
+          if (cooldownRef.current) clearTimeout(cooldownRef.current);
+          cooldownRef.current = setTimeout(() => {
             setMessage(null);
             highSpeedStart.current = null;
+            isDizzyRef.current = false;
           }, COOLDOWN_DURATION);
+
+          return;
         }
       } else {
         highSpeedStart.current = null;
       }
-
-      if (message) return;
 
       const rect = containerRef.current.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
@@ -62,18 +83,28 @@ const Avatar = ({ className }) => {
       y = Math.max(-MAX_OFFSET, Math.min(MAX_OFFSET, y));
 
       setEyePosition({ x, y });
-      setFaceTilt(x * 10);
-    };
+      setFaceTilt(x * MAX_TILT);
+    });
+  }, []);
 
+  useEffect(() => {
     window.addEventListener("mousemove", handleMouseMove);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
+
+      if (cooldownRef.current) {
+        clearTimeout(cooldownRef.current);
+      }
+
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
     };
-  }, [message]);
+  }, [handleMouseMove]);
 
   return (
-    <div ref={containerRef} className={`avatar-container ${className}`}>
+    <div ref={containerRef} className={`avatar-container ${intAv}`}>
       <svg
         width="264px"
         height="280px"

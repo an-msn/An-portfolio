@@ -24,8 +24,8 @@
 }
 .home__subtitle {
   position: relative;
-  color: #777777;
-  font-size: var(--h3-font-size);
+  color: #898989;
+  font-size: 1.4rem;
   font-weight: var(--font-normal);
   margin-bottom: var(--mb-1);
   /*padding-left: 5.4rem;*/
@@ -49,15 +49,15 @@
 .home__title {
   font-size: var(--big-font-size);
   margin-bottom: var(--mb-0-25);
-  color: #000000;
+  color: #111827;
 }
 
 .home__description {
   max-width: 650px;
   margin-top: 0rem;
   line-height: 1.8;
-  font-size: 1rem;
-  color: #000000;
+  font-size: 1.1rem;
+  color: #111827;
 }
 
 .home__avatar-wrapper {
@@ -65,7 +65,7 @@
   justify-content: center;
   align-items: center;
   /* align-self: start; failed to align with textbox, (try margin top)*/
-  margin-top: -13rem; /* Adjust value to align avatar with description text block */
+  margin-top: -15rem; /* Adjust value to align avatar with description text block */
 }
 
 .home__avatar {
@@ -103,6 +103,11 @@
   font-weight: var(--font-medium);
   margin-right: var(--mb-0-25);
   margin-left: 2px;
+  transition: color 0.3s ease-in-out;
+}
+
+.home__scroll-button:hover .home__scroll-name {
+  color: #6ab9ff;
 }
 
 .home__scroll-arrow {
@@ -189,4 +194,73 @@
     width: 180px;
     height: 180px;
   }
+}
+
+/* Dark theme*/
+
+html[data-theme="dark"] .home.section {
+  background-color: transparent;
+}
+
+html[data-theme="dark"] .home__subtitle {
+  color: #919191;
+}
+
+html[data-theme="dark"] .home__social-icon {
+  color: #63b3ed;
+}
+
+html[data-theme="dark"] .home__social-icon:hover {
+  color: #eeeeee;
+}
+
+html[data-theme="dark"] .home__title {
+  color: #ffffff;
+}
+
+html[data-theme="dark"] .home__description {
+  color: #d7d7d7;
+}
+
+html[data-theme="dark"] .home__avatar {
+  background: #2d3748;
+  box-shadow: inset 0 0 0 9px rgba(74, 85, 104, 0.5);
+}
+
+html[data-theme="dark"] .home__scroll-name {
+  color: #cbd5e0;
+}
+
+html[data-theme="dark"] .home__scroll-arrow {
+  color: #e2e8f0;
+}
+
+/* Dark theme adjustments for mobile */
+@media screen and (max-width: 992px) {
+  html[data-theme="dark"] .home__avatar {
+    box-shadow: inset 0 0 0 8px rgba(74, 85, 104, 0.5);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  html[data-theme="dark"] .home__avatar {
+    box-shadow: inset 0 0 0 6px rgba(74, 85, 104, 0.5);
+  }
+}
+
+/* Style for the new Scroll Reveal icon */
+.home__scroll-mouse {
+  /* 1. Adds color to the icon (uses your existing theme variable) */
+  color: var(--title-color);
+
+  /* 2. Adds space between the icon and the "Scroll" text */
+  margin-right: 0.5rem; /* Adjust this value as needed */
+
+  /* This ensures the color change on hover is smooth */
+  transition: color 0.3s ease-in-out;
+}
+
+/* 3. Adds the hover effect */
+.home__scroll-button:hover {
+  color: #6ab9ff;
 }

@@ -9,13 +9,16 @@
   background-color: var(--container-color);
   padding: 1rem;
   border-radius: 1rem;
-  box-shadow: 0 1px 2px rgba(95, 95, 95, 0.607);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1.5px solid #c4c4c4;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  box-sizing: border-box;
 }
+
 .projects__content:hover,
 .projects__content:focus-within {
   transform: translateY(-4px);
-  box-shadow: 0 2px 14px rgba(58, 166, 255, 0.467);
+  border-color: #3ca7ff;
+  box-shadow: none;
 }
 .projects__img {
   width: 100%;
@@ -32,7 +35,7 @@
 }
 
 .projects__button {
-  color: var(--title-color);
+  color: #2347b5;
   font-size: 0.9rem;
   font-weight: 300;
   display: inline-flex;
@@ -209,5 +212,80 @@
   .projects__modal-content {
     width: 95%; /* More space on tiny screens */
     padding: 2rem 0.5rem;
+  }
+}
+
+/* Dark theme */
+html[data-theme="dark"] .projects__container {
+  color: #e2e8f0;
+}
+
+html[data-theme="dark"] .projects__content {
+  background-color: #000000;
+  color: #e2e8f0; /* Light text */
+  border-color: #2e3747; /* Darker border */
+}
+
+html[data-theme="dark"] .projects__content:hover,
+html[data-theme="dark"] .projects__content:focus-within {
+  border-color: #63b3ed;
+
+  box-shadow: none !important;
+}
+html[data-theme="dark"] .projects__title {
+  color: #f7fafc;
+}
+
+html[data-theme="dark"] .projects__button {
+  color: #a0aec0;
+}
+
+html[data-theme="dark"] .projects__button:hover {
+  color: #63b3ed;
+}
+
+/* Modal styles */
+html[data-theme="dark"] .projects__modal {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+html[data-theme="dark"] .projects__modal-content {
+  background-color: #1a202c;
+}
+
+html[data-theme="dark"] .projects__modal-close {
+  color: #e2e8f0;
+}
+
+html[data-theme="dark"] .projects__modal-title {
+  color: #f7fafc;
+}
+
+html[data-theme="dark"] .projects__modal-subtitle {
+  color: #a0aec0;
+}
+
+html[data-theme="dark"] .projects__modal-description p {
+  color: #cbd5e0;
+}
+
+html[data-theme="dark"] .projects__modal-button {
+  background-color: #3182ce;
+  color: #f7fafc;
+}
+
+html[data-theme="dark"] .projects__modal-button:hover {
+  background-color: #63b3ed;
+}
+
+html[data-theme="dark"] .projects__modal-button--disabled {
+  background-color: #4a5568;
+  color: #a0aec0;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 992px) {
+  html[data-theme="dark"] .projects__content {
+    background-color: #2d3748;
   }
 }

@@ -60,3 +60,6 @@
     opacity: 1;
   }
 }
+html[data-theme="dark"] .loader {
+  background: #020d19;
+}

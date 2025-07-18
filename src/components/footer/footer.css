@@ -116,3 +116,7 @@
     line-height: 1.5;
   }
 }
+
+html[data-theme="dark"] .footer__copy {
+  color: #999999;
+}

@@ -4,9 +4,9 @@
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 0.5rem;
+  gap: 0.4rem;
   padding: 0.5rem 1rem;
-  background-color: rgb(255, 255, 255);
+  background-color: rgba(255, 255, 255, 0.789);
   border: 2px solid rgba(103, 103, 103, 0.158);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -14,15 +14,16 @@
   border-radius: 9999px;
   z-index: 1000;
   transition: height 0.3s ease;
-  height: 3.5rem; /* default height */
+  height: 3.9rem; /* default height */
   overflow: visible;
   align-items: center;
 }
+
 .navbar:hover {
-  height: 4.3rem; /* expanded height on hover */
+  height: 4.4rem; /* expanded height on hover */
 }
 
-.navbar a {
+.icon-link {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -34,9 +35,13 @@
   text-decoration: none;
   transition: transform 0.25s ease, background-color 0.25s ease;
   cursor: pointer;
+
+  background: none;
+  border: none;
+  padding: 0;
 }
 
-.navbar a:hover {
+.icon-link:hover {
   color: #4e7dff;
   background-color: rgba(255, 255, 255, 0);
   transform: translateY(-4px) scale(1.05);
@@ -73,15 +78,25 @@
   transform: translateY(0);
 }
 
-/* Dark mode 
-@media (prefers-color-scheme: dark) {
-  .navbar {
-    background-color: rgba(30, 30, 30, 0.9);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
+/* Dark theme overrides */
+/* Navbar */
+html[data-theme="dark"] .navbar {
+  background-color: rgba(28, 28, 30, 0.75); /* Dark charcoal */
+  border: 1px solid rgba(184, 184, 184, 0.29);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
 
-  .nav-label {
-    color: #ddd;
-  }
-}*/
+/*  Icons  */
+html[data-theme="dark"] .icon-link {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Labels */
+html[data-theme="dark"] .nav-label {
+  color: rgba(255, 255, 255, 0.6);
+  text-shadow: none;
+}
+
+html[data-theme="dark"] .icon-link:hover {
+  color: #4e7dff;
+}

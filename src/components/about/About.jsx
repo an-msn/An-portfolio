@@ -5,7 +5,7 @@ import { IoDocumentAttachOutline } from "react-icons/io5";
 const About = () => {
   return (
     <section className="about section" id="about">
-      <h2 className="section__title">About.</h2>
+      <h2 className="section__title">About</h2>
       <span className="about__subtitle">
         A little about me and my background.
       </span>

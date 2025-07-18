@@ -111,7 +111,7 @@
 
 .send__button {
   margin-top: 0.5rem;
-  background-color: white;
+  background-color: #fcfcfc;
   color: black;
   padding: 0.75rem 1.5rem;
   font-weight: 300;
@@ -124,7 +124,7 @@
   gap: 0.5em;
 }
 .send__button:hover {
-  background-color: #c9c9c9;
+  background-color: #63b3ed;
 }
 .send__button svg {
   font-size: 1.1em;
@@ -256,6 +256,98 @@
 }
 
 @media screen and (max-width: 350px) {
+}
+
+/* Dark theme */
+html[data-theme="dark"] .contact_container {
+  color: #e2e8f0;
+}
+
+html[data-theme="dark"] .cL_heading {
+  color: #fab062;
+}
+
+html[data-theme="dark"] .cL_description {
+  color: #cbd5e0;
+}
+
+html[data-theme="dark"] .c_email-line {
+  color: #a0aec0;
+}
+
+html[data-theme="dark"] .contact__arrow {
+  color: #63b3ed;
+}
+
+html[data-theme="dark"] .contact__arrow:hover {
+  color: #90cdf4;
+}
+
+html[data-theme="dark"] .cSocial_icon {
+  color: #e2e8f0;
+}
+
+html[data-theme="dark"] .cSocial_icon:hover {
+  color: #63b3ed;
+}
+
+html[data-theme="dark"] .c_form-input {
+  background-color: rgba(45, 55, 72, 0.5);
+  border: 1px solid #4a5568;
+  color: #f7fafc;
+}
+
+html[data-theme="dark"] .c_form-input:focus {
+  border-color: #63b3ed;
+  box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.3);
+  outline: none;
+}
+
+html[data-theme="dark"] .c_form-input::placeholder {
+  color: #a0aec0;
+}
+
+html[data-theme="dark"] .send__button {
+  background-color: #3182ce;
+  color: #f7fafc;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+html[data-theme="dark"] .send__button:hover {
+  background-color: #63b3ed;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+html[data-theme="dark"] .status-message.success {
+  background-color: rgba(39, 174, 96, 0.15);
+  color: #48bb78;
+}
+
+html[data-theme="dark"] .status-message.error,
+html[data-theme="dark"] .status-message.validation_error {
+  background-color: rgba(231, 76, 60, 0.15);
+  color: #fc8181;
+}
+
+html[data-theme="dark"] .error-msg {
+  color: #fc8181;
+
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+}
+
+html[data-theme="dark"] .input-error {
+  border-color: #fc8181 !important;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  html[data-theme="dark"] .c_left,
+  html[data-theme="dark"] .c_right {
+    background-color: transparent;
+  }
 }
 
 /* Removed */

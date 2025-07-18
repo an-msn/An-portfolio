@@ -3,28 +3,34 @@ import "./contact.css";
 import { HiOutlineArrowSmRight } from "react-icons/hi";
 import { TfiInstagram } from "react-icons/tfi";
 import { TbSend } from "react-icons/tb";
-import emailjs from "@emailjs/browser";
 
 const Contact = () => {
   const form = useRef();
-  const [messageStatus, setMessageStatus] = useState(null); // null, success, error
+  const [messageStatus, setMessageStatus] = useState(null); // null, 'sending', 'success', 'error'
   const [errors, setErrors] = useState({});
+
+  const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
 
   const validateForm = () => {
     const nwErrors = {};
     const formData = new FormData(form.current);
+    const name = formData.get("name").trim();
+    const email = formData.get("email").trim();
+    const message = formData.get("message").trim();
 
-    if (!formData.get("name").trim()) {
+    if (!name) {
       nwErrors.name = true;
     }
 
-    if (!formData.get("email").trim()) {
+    if (!email) {
+      // Set to true for required error (will trigger red border but no message)
       nwErrors.email = true;
-    } else if (!/^\S+@\S+\.\S+$/.test(formData.get("email"))) {
+    } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+      // Set to a string only for the format error (will trigger red border AND message)
       nwErrors.email = "Invalid email format";
     }
 
-    if (!formData.get("message").trim()) {
+    if (!message) {
       nwErrors.message = true;
     }
 
@@ -32,9 +38,10 @@ const Contact = () => {
     return Object.keys(nwErrors).length === 0;
   };
 
-  const sendEmail = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setMessageStatus(null);
+    setErrors({});
 
     if (!validateForm()) {
       setMessageStatus("validation_error");
@@ -42,26 +49,37 @@ const Contact = () => {
       return;
     }
 
-    emailjs
-      .sendForm(
-        "service_1ys3hra",
-        "template_k2nq8n5",
-        form.current,
-        "PDq2pAwq2jtdaL6oK"
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-          setMessageStatus("success");
-          form.current.reset();
-          setTimeout(() => setMessageStatus(null), 3000);
+    setMessageStatus("sending");
+    const formData = new FormData(form.current);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
         },
-        (error) => {
-          console.log(error.text);
-          setMessageStatus("error");
-          setTimeout(() => setMessageStatus(null), 4000);
-        }
-      );
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        console.log(result);
+        setMessageStatus("success");
+        form.current.reset();
+        setTimeout(() => setMessageStatus(null), 3000);
+      } else {
+        console.error("Error from Web3Forms:", result);
+        setMessageStatus("error");
+        setTimeout(() => setMessageStatus(null), 4000);
+      }
+    } catch (error) {
+      console.error("Submission Error:", error);
+      setMessageStatus("error");
+      setTimeout(() => setMessageStatus(null), 4000);
+    }
   };
 
   return (
@@ -75,14 +93,12 @@ const Contact = () => {
             media accounts or just drop me a message, and I’ll get back to you
             as soon as possible!
           </p>
-
           <div className="c_email-line">
             <span className="c_email">ananthumsn02@gmail.com</span>
             <a href="mailto:ananthumsn02@gmail.com" className="contact__arrow">
               <HiOutlineArrowSmRight />
             </a>
           </div>
-
           <div className="c_socials">
             <a
               href="https://www.instagram.com/an.msn_"
@@ -95,40 +111,53 @@ const Contact = () => {
           </div>
         </div>
 
-        {/* Right: Form/Say hello*/}
+        {/* Right: Form */}
         <div className="c_right">
-          {/*<h3 className="c_title">Say hello</h3>*/}
-
           <form
             ref={form}
-            onSubmit={sendEmail}
+            onSubmit={handleSubmit}
             className="contact__form"
             noValidate
           >
+            <input type="hidden" name="access_key" value={accessKey} />
+            <input
+              type="hidden"
+              name="subject"
+              value="New Contact Form Submission from Portfolio"
+            />
+            <input
+              type="checkbox"
+              name="botcheck"
+              className="hidden"
+              style={{ display: "none" }}
+            ></input>
+
             <div className="c_form-div">
-              {/*<label className="c_form-tag">Name</label>*/}
               <input
                 type="text"
                 name="name"
                 className={`c_form-input ${errors.name ? "input-error" : ""}`}
                 placeholder="Your name"
+                required
               />
-              {errors.name && <span className="error-msg">{errors.name}</span>}
+              {/* No error message, only red border */}
             </div>
 
             <div className="c_form-div">
-              {/*<label className="c_form-tag">Email</label>*/}
               <input
                 type="email"
                 name="email"
                 className={`c_form-input ${errors.email ? "input-error" : ""}`}
                 placeholder="Email"
+                required
               />
+              {/*error msg- invalid email format */}
+              {typeof errors.email === "string" && (
+                <span className="error-msg">{errors.email}</span>
+              )}
             </div>
-            {errors.email && <span className="error-msg">{errors.email}</span>}
 
             <div className="c_form-div c_form-area">
-              {/*<label className="c_form-tag">Project</label>*/}
               <textarea
                 name="message"
                 rows="7"
@@ -136,23 +165,35 @@ const Contact = () => {
                   errors.message ? "input-error" : ""
                 }`}
                 placeholder="Message"
+                required
               ></textarea>
+              {/* No error message, only red border */}
             </div>
 
-            <button type="submit" className="button send__button">
-              Send <TbSend />
+            <button
+              type="submit"
+              className="button send__button"
+              disabled={messageStatus === "sending"}
+            >
+              {messageStatus === "sending" ? (
+                "Sending..."
+              ) : (
+                <>
+                  Send <TbSend />
+                </>
+              )}
             </button>
 
             {messageStatus && (
               <div className={`status-message ${messageStatus}`}>
                 {messageStatus === "success" && (
-                  <p>Message sent successfully!</p>
+                  <p>Message sent successfully! </p>
                 )}
                 {messageStatus === "error" && (
-                  <p>Failed to send message. Try again.</p>
+                  <p>Failed to send message. Try again</p>
                 )}
                 {messageStatus === "validation_error" && (
-                  <p>Please fix the errors</p>
+                  <p>Please fix the errors </p>
                 )}
               </div>
             )}
