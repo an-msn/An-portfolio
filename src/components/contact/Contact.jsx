@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./contact.css";
 import { HiOutlineArrowSmRight } from "react-icons/hi";
 import { TfiInstagram } from "react-icons/tfi";
@@ -6,11 +6,21 @@ import { TbSend } from "react-icons/tb";
 
 const Contact = () => {
   const form = useRef();
-  const [messageStatus, setMessageStatus] = useState(null); // null, 'sending', 'success', 'error'
+  const [messageStatus, setMessageStatus] = useState(null);
   const [errors, setErrors] = useState({});
-
-  // 1. Get your FormBold Form ID from an environment variable
   const formboldFormId = import.meta.env.VITE_FORMBOLD_FORM_ID;
+
+  // Ref to hold the timer ID
+  const timeoutRef = useRef(null);
+
+  // Effect to clean up the timer if the component unmounts, preventing memory leaks
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   const validateForm = () => {
     const nwErrors = {};
@@ -19,21 +29,15 @@ const Contact = () => {
     const email = formData.get("email").trim();
     const message = formData.get("message").trim();
 
-    if (!name) {
-      nwErrors.name = true;
-    }
+    if (!name) nwErrors.name = true;
 
     if (!email) {
-      // Set to true for required error (will trigger red border but no message)
       nwErrors.email = true;
     } else if (!/^\S+@\S+\.\S+$/.test(email)) {
-      // Set to a string only for the format error (will trigger red border AND message)
       nwErrors.email = "Invalid email format";
     }
 
-    if (!message) {
-      nwErrors.message = true;
-    }
+    if (!message) nwErrors.message = true;
 
     setErrors(nwErrors);
     return Object.keys(nwErrors).length === 0;
@@ -41,21 +45,29 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessageStatus(null);
-    setErrors({});
+
+    // Clear any existing timer before starting a new submission cycle.
+    // This prevents an old timer from hiding a new message prematurely.
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    setErrors({}); // Clear old validation errors
 
     if (!validateForm()) {
       setMessageStatus("validation_error");
-      setTimeout(() => setMessageStatus(null), 3000);
+      // Set a new timer to hide the validation error message
+      timeoutRef.current = setTimeout(() => setMessageStatus(null), 3000);
       return;
     }
 
+    // Set status to "sending" to give user feedback
     setMessageStatus("sending");
+
     const formData = new FormData(form.current);
     const data = Object.fromEntries(formData.entries());
 
     try {
-      // 2. Update the fetch request to the FormBold endpoint
       const response = await fetch(`https://formbold.com/s/${formboldFormId}`, {
         method: "POST",
         headers: {
@@ -65,22 +77,21 @@ const Contact = () => {
         body: JSON.stringify(data),
       });
 
-      // 3. Check for a successful response status (response.ok)
       if (response.ok) {
-        console.log("Form submitted successfully!");
         setMessageStatus("success");
         form.current.reset();
-        setTimeout(() => setMessageStatus(null), 3000);
+        // Set the timer to hide the success message after 10 seconds
+        timeoutRef.current = setTimeout(() => setMessageStatus(null), 10000);
       } else {
         const result = await response.json();
         console.error("Error from FormBold:", result);
         setMessageStatus("error");
-        setTimeout(() => setMessageStatus(null), 4000);
+        timeoutRef.current = setTimeout(() => setMessageStatus(null), 5000);
       }
     } catch (error) {
       console.error("Submission Error:", error);
       setMessageStatus("error");
-      setTimeout(() => setMessageStatus(null), 4000);
+      timeoutRef.current = setTimeout(() => setMessageStatus(null), 5000);
     }
   };
 
@@ -121,8 +132,6 @@ const Contact = () => {
             className="contact__form"
             noValidate
           >
-            {/* 4. Removed Web3Forms-specific hidden inputs (access_key, subject, botcheck) */}
-
             <div className="c_form-div">
               <input
                 type="text"
@@ -131,7 +140,6 @@ const Contact = () => {
                 placeholder="Your name"
                 required
               />
-              {/* No error message, only red border */}
             </div>
 
             <div className="c_form-div">
@@ -142,7 +150,6 @@ const Contact = () => {
                 placeholder="Email"
                 required
               />
-              {/*error msg- invalid email format */}
               {typeof errors.email === "string" && (
                 <span className="error-msg">{errors.email}</span>
               )}
@@ -158,7 +165,6 @@ const Contact = () => {
                 placeholder="Message"
                 required
               ></textarea>
-              {/* No error message, only red border */}
             </div>
 
             <button
@@ -175,16 +181,17 @@ const Contact = () => {
               )}
             </button>
 
+            {/* Status Message Area */}
             {messageStatus && (
               <div className={`status-message ${messageStatus}`}>
                 {messageStatus === "success" && (
-                  <p>Message sent successfully! </p>
+                  <p>Message sent successfully!</p>
                 )}
                 {messageStatus === "error" && (
                   <p>Failed to send message. Try again</p>
                 )}
                 {messageStatus === "validation_error" && (
-                  <p>Please fix the errors </p>
+                  <p>Please fix the errors</p>
                 )}
               </div>
             )}

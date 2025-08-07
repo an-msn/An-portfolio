@@ -135,14 +135,39 @@
   margin-top: 1.5rem;
   padding: 1rem;
   border-radius: 8px;
-  animation: fadeInOut 4s forwards;
 }
 
 .status-message.success {
-  background-color: rgba(175, 175, 175, 0.085);
-  color: #27ae60;
-  font-weight: 300;
+  position: relative;
+  background-color: white;
+  color: #07bc0c;
+  font-weight: 400;
   font-size: 1rem;
+  padding: 14px 20px;
+  border-radius: 6px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.status-message.success::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(90deg, #4cd964, #07bc0c);
+  animation: progress 10s linear forwards;
+  transform-origin: right;
+}
+
+@keyframes progress {
+  0% {
+    transform: scaleX(1);
+  }
+  100% {
+    transform: scaleX(0);
+  }
 }
 
 .status-message.error,
