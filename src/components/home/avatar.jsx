@@ -222,7 +222,7 @@ const Avatar = ({ intAv }) => {
                   fill="#000000"
                 >
                   <g
-                    id="Mouth/Twinkle"
+                    id="Mouth_Twinkle"
                     transform="translate(2.000000, 52.000000)"
                     fillOpacity="0.599999964"
                     fillRule="nonzero"
@@ -244,7 +244,7 @@ const Avatar = ({ intAv }) => {
                     ></path>
                   </g>
                   <g
-                    id="Eyes/Default-😀"
+                    id="Eyes_Default-😀"
                     transform={`translate(${eyePosition.x * 10}, ${
                       eyePosition.y * 8
                     })`}

@@ -9,7 +9,8 @@ const Contact = () => {
   const [messageStatus, setMessageStatus] = useState(null); // null, 'sending', 'success', 'error'
   const [errors, setErrors] = useState({});
 
-  const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+  // 1. Get your FormBold Form ID from an environment variable
+  const formboldFormId = import.meta.env.VITE_FORMBOLD_FORM_ID;
 
   const validateForm = () => {
     const nwErrors = {};
@@ -54,7 +55,8 @@ const Contact = () => {
     const data = Object.fromEntries(formData.entries());
 
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
+      // 2. Update the fetch request to the FormBold endpoint
+      const response = await fetch(`https://formbold.com/s/${formboldFormId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -63,15 +65,15 @@ const Contact = () => {
         body: JSON.stringify(data),
       });
 
-      const result = await response.json();
-
-      if (result.success) {
-        console.log(result);
+      // 3. Check for a successful response status (response.ok)
+      if (response.ok) {
+        console.log("Form submitted successfully!");
         setMessageStatus("success");
         form.current.reset();
         setTimeout(() => setMessageStatus(null), 3000);
       } else {
-        console.error("Error from Web3Forms:", result);
+        const result = await response.json();
+        console.error("Error from FormBold:", result);
         setMessageStatus("error");
         setTimeout(() => setMessageStatus(null), 4000);
       }
@@ -119,18 +121,7 @@ const Contact = () => {
             className="contact__form"
             noValidate
           >
-            <input type="hidden" name="access_key" value={accessKey} />
-            <input
-              type="hidden"
-              name="subject"
-              value="New Contact Form Submission from Portfolio"
-            />
-            <input
-              type="checkbox"
-              name="botcheck"
-              className="hidden"
-              style={{ display: "none" }}
-            ></input>
+            {/* 4. Removed Web3Forms-specific hidden inputs (access_key, subject, botcheck) */}
 
             <div className="c_form-div">
               <input

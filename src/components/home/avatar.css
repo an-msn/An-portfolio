@@ -40,12 +40,12 @@
 }
 
 /* Hover Effects */
-.avatar.hover #Mouth/Twinkle path {
+.avatar.hover #Mouth_Twinkle path {
   fill-opacity: 0.8;
   transform: translateY(-1px);
 }
 
-.avatar.hover #Eyes/Default-😀 circle {
+.avatar.hover #Eyes_Default-😀 circle {
   transform: scaleY(0.9);
 }
 
